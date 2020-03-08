@@ -1,0 +1,1 @@
+export 'package:easy_exchange/model/currency_rate.dart';
