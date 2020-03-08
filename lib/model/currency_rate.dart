@@ -1,7 +1,5 @@
 import 'package:money/money.dart';
 
-export 'currency_rate.dart';
-
 class CurrencyRate {
   final Currency baseCurrency;
   final List<Rate> rates;
