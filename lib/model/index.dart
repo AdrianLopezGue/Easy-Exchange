@@ -1,1 +1,1 @@
-export 'package:easy_exchange/model/currency_rate.dart';
+export 'package:easy_exchange/model/currency_rates.dart';

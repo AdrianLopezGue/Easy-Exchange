@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:easy_exchange/model/index.dart';
+
 import 'package:easy_exchange/ui/widget/index.dart';
 
 
