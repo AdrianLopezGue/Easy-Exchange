@@ -11,6 +11,10 @@ class CurrencyRates {
     return CurrencyRates(
         Currency(baseCurrency), _parseRates(json['rates'], baseCurrency));
   }
+
+  Rate getRate(int index){
+    return rates[index];
+  }
 }
 
 class Rate {
@@ -22,9 +26,7 @@ class Rate {
 
 List<Rate> _parseRates(Map<String, dynamic> ratesMap, String baseCurrencyCode) {
   return ratesMap.keys
-      // for some currencies api return base currency in the list of rates, we need to skip it
       .where((code) => code != baseCurrencyCode)
-      // rates are key values like this { "USD" : 2.333 }
       .map((code) => Rate(Currency(code), ratesMap[code]))
       .toList();
 }
