@@ -4,8 +4,19 @@ import 'package:easy_exchange/redux/state.dart';
 import 'package:easy_exchange/repository/currency-rates-repository.dart';
 import 'package:money/money.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-List<Middleware<AppState>> createMiddleware(CurrencyRatesRepository repository) => [
+ThunkAction<AppState> getSpecificRates(Currency baseCurrency, Currency otherCurrency) {
+
+  CurrencyRatesRepository _repository = new CurrencyRatesRepository();
+
+  return (Store<AppState> store) async {
+    CurrencyRates rates = await _repository.fetchSpecificCurrencyRates(baseCurrency, otherCurrency);
+    store.dispatch(ActionRatesUpdated(rates));
+  };
+}
+
+/*List<Middleware<AppState>> createMiddleware(CurrencyRatesRepository repository) => [
       FetchRatesMiddleware(repository),
     ];
 
@@ -38,3 +49,4 @@ class FetchRatesMiddleware implements MiddlewareClass<AppState> {
     }
   }
 }
+*/

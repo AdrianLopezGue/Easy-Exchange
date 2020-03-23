@@ -40,9 +40,10 @@ class CurrencyRateListLeft extends StatelessWidget {
                             subtitle: Text(
                                 snapshot.data.data.rates[index].currency.code),
                             onTap: () {
-                              store.dispatch(ActionCurrencyRateLeftChanged(
+                              store.dispatch(getSpecificRates(
                                   Currency(snapshot.data.data.rates[index].currency.code),
-                                  Currency(state.currencyRateRight.currency.code)));
+                                  Currency(state.currencyRateRight.currency.code))
+                                  );
                               Navigator.pop(context, true);
                             },
                           );

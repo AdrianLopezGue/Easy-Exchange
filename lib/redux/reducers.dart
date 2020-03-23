@@ -42,6 +42,7 @@ RatesListState ratesUpdatedReducer(
 
   return state.copyWith(
     currencyRateLeft: Rate(action.ratesResponse.baseCurrency, 1.0),
-    currencyRateRight: Rate(action.ratesResponse.rates[0].currency, action.ratesResponse.rates[0].rate)
+    currencyRateRight: Rate(action.ratesResponse.rates[0].currency, action.ratesResponse.rates[0].rate),
+    amountRight: state.amountLeft * action.ratesResponse.rates[0].rate
   );
 }
