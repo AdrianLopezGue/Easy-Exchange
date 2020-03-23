@@ -16,8 +16,15 @@ class MoneyInput extends StatefulWidget {
 
 class _MoneyInputState extends State<MoneyInput> {
 
+  var text;
+
+  TextEditingController inputController;
+
   @override
-  void initState() {
+  void initState(){
+    text = Money.fromDouble(widget.amount, widget.currency).amountAsString;
+    inputController= new TextEditingController(text: text);
+
     super.initState();
   }
 
@@ -25,14 +32,16 @@ class _MoneyInputState extends State<MoneyInput> {
   Widget build(BuildContext context) {
 
     return (StoreBuilder<AppState>(
-      builder: (context, store) {
-      var text = Money.fromDouble(widget.amount, widget.currency).amountAsString;
+      builder: (context, store) {   
+
       return TextField(
-          controller: TextEditingController(text: text),
-          keyboardType: TextInputType.number,          
+          controller: inputController,
+          keyboardType: TextInputType.number,  
+          textAlign: TextAlign.center,
+          maxLines: 1,        
           onChanged: (text){
             store.dispatch(ActionSetLeftAmount(double.parse(text)));
-          },
+          }
       );
       }       
     ));
