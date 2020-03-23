@@ -11,10 +11,6 @@ class CurrencyRates {
     return CurrencyRates(
         Currency(baseCurrency), _parseRates(json['rates'], baseCurrency));
   }
-
-  Rate getRate(int index){
-    return rates[index];
-  }
 }
 
 class Rate {

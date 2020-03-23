@@ -9,12 +9,14 @@ import 'package:money/money.dart';
 class CurrencyRateListLeft extends StatelessWidget {
 
   final RatesListState state;
-  final CurrencyRatesListBloc _bloc = CurrencyRatesListBloc();  
 
   CurrencyRateListLeft({Key key, this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
+    final CurrencyRatesListBloc _bloc = CurrencyRatesListBloc(state.currencyRateLeft.currency);  
+
     return StoreBuilder<AppState>(
       builder: (context, store) => StreamBuilder<Response<CurrencyRates>>(
           stream: _bloc.currencyRatesListStream,
@@ -39,9 +41,8 @@ class CurrencyRateListLeft extends StatelessWidget {
                                 snapshot.data.data.rates[index].currency.code),
                             onTap: () {
                               store.dispatch(ActionCurrencyRateLeftChanged(
-                                  Currency(snapshot
-                                      .data.data.rates[index].currency.code),
-                                  snapshot.data.data.rates[index].rate));
+                                  Currency(snapshot.data.data.rates[index].currency.code),
+                                  Currency(state.currencyRateRight.currency.code)));
                               Navigator.pop(context, true);
                             },
                           );

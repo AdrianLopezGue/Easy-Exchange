@@ -1,11 +1,12 @@
+import 'package:easy_exchange/model/currency-rates.dart';
 import 'package:money/money.dart';
 
 
 class ActionCurrencyRateLeftChanged {
   final Currency currencyLeft;
-  final double rateLeft;
+  final Currency currencyRight;
 
-  const ActionCurrencyRateLeftChanged(this.currencyLeft, this.rateLeft);
+  const ActionCurrencyRateLeftChanged(this.currencyLeft, this.currencyRight);
 }
 
 class ActionCurrencyRateRightChanged {
@@ -21,8 +22,15 @@ class ActionSetLeftAmount {
   const ActionSetLeftAmount(this.leftAmount);
 }
 
-class ActionSetRightAmount {
-  final double rightAmount;
 
-  const ActionSetRightAmount(this.rightAmount);
+class ActionRatesUpdated {
+  final CurrencyRates ratesResponse;
+
+  const ActionRatesUpdated(this.ratesResponse);
+}
+
+class ActionRatesUpdateError {
+  final Object error;
+
+  const ActionRatesUpdateError(this.error);
 }

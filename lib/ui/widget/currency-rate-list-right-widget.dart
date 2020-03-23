@@ -9,12 +9,14 @@ import 'package:money/money.dart';
 class CurrencyRateListRight extends StatelessWidget {
 
   final RatesListState state;
-  final CurrencyRatesListBloc _bloc = CurrencyRatesListBloc();  
 
   CurrencyRateListRight({Key key, this.state}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final CurrencyRatesListBloc _bloc = CurrencyRatesListBloc(state.currencyRateLeft.currency);  
+
     return StoreBuilder<AppState>(
       builder: (context, store) => StreamBuilder<Response<CurrencyRates>>(
           stream: _bloc.currencyRatesListStream,

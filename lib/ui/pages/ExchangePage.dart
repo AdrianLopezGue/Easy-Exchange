@@ -47,7 +47,7 @@ class _ExchangePage extends State<ExchangePage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0),
-                          child: MoneyInput(amount: state.amountLeft, currency: state.currencyRateLeft.currency),
+                          child: MoneyInputLeft(amount: state.amountLeft, currency: state.currencyRateLeft.currency),
                         )                                              
                       ) 
                     ],
@@ -78,7 +78,7 @@ class _ExchangePage extends State<ExchangePage> {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0),
-                          child: MoneyInput(amount: state.amountRight, currency: state.currencyRateRight.currency),
+                          child: Text((state.amountRight).toString()),
                         )                                              
                       )
                   ],)

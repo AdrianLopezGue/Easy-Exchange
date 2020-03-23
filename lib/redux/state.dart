@@ -45,6 +45,6 @@ class RatesListState {
     currencyRateLeft: Rate(_defaultcurrencyRateLeft, 1.0),
     currencyRateRight: Rate(_defaultCurrencyRateRight, 1.7),
     amountLeft: 1.0,
-    amountRight: 1.07,
+    amountRight: 1.7
   );
 }

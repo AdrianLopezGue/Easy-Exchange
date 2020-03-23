@@ -11,6 +11,7 @@ class ApiProvider {
 
   Future<dynamic> get(String url) async {
     var responseJson;
+
     try {
       final response = await http.get(_baseUrl + url);
       responseJson = _response(response);

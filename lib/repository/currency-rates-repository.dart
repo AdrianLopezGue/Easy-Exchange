@@ -12,9 +12,17 @@ class CurrencyRatesRepository {
     return CurrencyRates.fromJson(response);
   }
 
-  Future<CurrencyRates> fetchSpecificCurrencyRates(Currency baseCurrency) async {
+  Future<CurrencyRates> fetchBaseCurrencyRates(Currency baseCurrency) async {
     final String parameterUrl = "?base=" + baseCurrency.code;
 
+    final response = await _provider.get(parameterUrl);
+
+    return CurrencyRates.fromJson(response);
+  }
+
+  Future<CurrencyRates> fetchSpecificCurrencyRates(Currency baseCurrency, Currency anotherCurrency) async {
+    final String parameterUrl = "?base=" + baseCurrency.code + "&&symbols=" + anotherCurrency.code;
+    
     final response = await _provider.get(parameterUrl);
 
     return CurrencyRates.fromJson(response);
