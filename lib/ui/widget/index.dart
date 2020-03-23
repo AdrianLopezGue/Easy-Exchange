@@ -1,1 +1,3 @@
-export 'currency_rates_list_widget.dart';
+export 'currency-rate-list-right-widget.dart';
+export 'curreny-rate-list-left-widget.dart';
+export 'money-input-widget.dart';

@@ -1,16 +1,18 @@
 import 'package:money/money.dart';
 
 
-class ActionCurrencyLeftChanged {
+class ActionCurrencyRateLeftChanged {
   final Currency currencyLeft;
+  final double rateLeft;
 
-  const ActionCurrencyLeftChanged(this.currencyLeft);
+  const ActionCurrencyRateLeftChanged(this.currencyLeft, this.rateLeft);
 }
 
-class ActionCurrencyRightChanged {
+class ActionCurrencyRateRightChanged {
   final Currency currencyRight;
+  final double rateRight;
 
-  const ActionCurrencyRightChanged(this.currencyRight);
+  const ActionCurrencyRateRightChanged(this.currencyRight, this.rateRight);
 }
 
 class ActionSetLeftAmount {

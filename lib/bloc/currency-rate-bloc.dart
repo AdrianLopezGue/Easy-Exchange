@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:easy_exchange/networking/response.dart';
-import 'package:easy_exchange/repository/currency_rates_repository.dart';
-import 'package:easy_exchange/model/currency_rates.dart';
+import 'package:easy_exchange/repository/currency-rates-repository.dart';
+import 'package:easy_exchange/model/currency-rates.dart';
 import 'package:rxdart/subjects.dart';
 
 class CurrencyRatesListBloc {

@@ -1,6 +1,6 @@
-import 'package:easy_exchange/networking/api_provider.dart';
+import 'package:easy_exchange/networking/api-provider.dart';
 import 'dart:async';
-import 'package:easy_exchange/model/currency_rates.dart';
+import 'package:easy_exchange/model/currency-rates.dart';
 import 'package:money/money.dart';
 
 class CurrencyRatesRepository {

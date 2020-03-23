@@ -11,8 +11,8 @@ AppState mainReducer(AppState state, dynamic action) {
 Reducer<RatesListState> ratesListReducer = combineReducers([
   TypedReducer<RatesListState, ActionSetLeftAmount>(setLeftAmountReducer),
   TypedReducer<RatesListState, ActionSetRightAmount>(setRightAmountReducer),
-  TypedReducer<RatesListState, ActionCurrencyLeftChanged>(currencyLeftChangedReducer),
-  TypedReducer<RatesListState, ActionCurrencyRightChanged>(currencyRightChangedReducer),
+  TypedReducer<RatesListState, ActionCurrencyRateLeftChanged>(currencyRateLeftChangedReducer),
+  TypedReducer<RatesListState, ActionCurrencyRateRightChanged>(currencyRateRightChangedReducer),
 ]);
 
 RatesListState setLeftAmountReducer(
@@ -21,6 +21,7 @@ RatesListState setLeftAmountReducer(
 ) {
   return state.copyWith(
     amountLeft: action.leftAmount,
+    amountRight: action.leftAmount * state.currencyRateRight.rate
   );
 }
 
@@ -33,20 +34,22 @@ RatesListState setRightAmountReducer(
   );
 }
 
-RatesListState currencyLeftChangedReducer(
+RatesListState currencyRateLeftChangedReducer(
   RatesListState state,
-  ActionCurrencyLeftChanged action,
+  ActionCurrencyRateLeftChanged action,
 ) {
   return state.copyWith(
-    currencyCodeLeft: action.currencyLeft,
+    currencyRateLeft: Rate(action.currencyLeft, action.rateLeft),
+    amountRight: state.amountLeft * state.currencyRateRight.rate
   );
 }
 
-RatesListState currencyRightChangedReducer(
+RatesListState currencyRateRightChangedReducer(
   RatesListState state,
-  ActionCurrencyRightChanged action,
+  ActionCurrencyRateRightChanged action,
 ) {
   return state.copyWith(
-    currencyCodeLeft: action.currencyRight,
+    currencyRateRight: Rate(action.currencyRight, action.rateRight),
+    amountRight: state.amountLeft * action.rateRight
   );
 }
