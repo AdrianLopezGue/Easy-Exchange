@@ -15,38 +15,3 @@ ThunkAction<AppState> getSpecificRates(Currency baseCurrency, Currency otherCurr
     store.dispatch(ActionRatesUpdated(rates));
   };
 }
-
-/*List<Middleware<AppState>> createMiddleware(CurrencyRatesRepository repository) => [
-      FetchRatesMiddleware(repository),
-    ];
-
-class FetchRatesMiddleware implements MiddlewareClass<AppState> {
-  final CurrencyRatesRepository _repository;
-
-  FetchRatesMiddleware(this._repository);
-
-  @override
-  void call(Store<AppState> store, action, NextDispatcher next) async {
-    if (action is ActionCurrencyRateLeftChanged) {
-      await _loadRates(next, action.currencyLeft, action.currencyRight);
-    } 
-    else{
-    next(action);
-    }
-  }
-
-  Future _loadRates(NextDispatcher next, Currency baseCurrency, Currency anotherCurrency) async {
-
-    try {
-      CurrencyRates result = await _repository.fetchSpecificCurrencyRates(baseCurrency, anotherCurrency);
-      next(ActionRatesUpdated(result));
-    } catch (e) {
-      if (e is Exception) {
-        e.toString();
-      }
-      print(e);
-      next(ActionRatesUpdateError(e));
-    }
-  }
-}
-*/

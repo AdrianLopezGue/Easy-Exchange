@@ -22,7 +22,6 @@ class ActionSetLeftAmount {
   const ActionSetLeftAmount(this.leftAmount);
 }
 
-
 class ActionRatesUpdated {
   final CurrencyRates ratesResponse;
 

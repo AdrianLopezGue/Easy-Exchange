@@ -19,70 +19,105 @@ class _ExchangePage extends State<ExchangePage> {
             converter: (store) => store.state.ratesListState,
             builder: (context, state) {
               // data loaded all is ok
-              return Column(
-                children: <Widget>[
-                  Row(
+              return Center(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      StoreBuilder<AppState>(
-                        builder: (context, store) => FlatButton(
-                          child: Text(store.state.ratesListState
-                              .currencyRateLeft.currency.name),
+                      Padding(
                           padding: EdgeInsets.all(15.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                          color: Colors.white,
-                          textColor: Colors.black,
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                child: new SimpleDialog(
-                                    title: new Text("Select Currency"),
-                                    children: <Widget>[
-                                      CurrencyRateListLeft(
-                                          state: store.state.ratesListState),
-                                    ]));
-                          },
+                          child: Row(                      
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            StoreBuilder<AppState>(
+                              builder: (context, store) => FlatButton(
+                                child: Text(store.state.ratesListState
+                                    .currencyRateLeft.currency.name),
+                                padding: EdgeInsets.all(15.0),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                color: Colors.white,
+                                textColor: Colors.black,
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      child: new SimpleDialog(
+                                          title: new Text("Select Currency"),
+                                          children: <Widget>[
+                                            CurrencyRateListLeft(
+                                                state: store.state.ratesListState),
+                                          ]));
+                                },
+                              ),
+                            ),
+                            StoreBuilder<AppState>(
+                                builder: (context, store) => FlatButton(
+                                    child:
+                                        Icon(Icons.swap_horiz, color: Colors.black),
+                                    padding: EdgeInsets.all(10.0),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8.0)),
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      store.dispatch(getSpecificRates(store.state.ratesListState
+                                              .currencyRateRight.currency,
+                                          store.state.ratesListState
+                                              .currencyRateLeft.currency));
+                                    })),
+                            StoreBuilder<AppState>(
+                              builder: (context, store) => FlatButton(
+                                child: Text(store.state.ratesListState
+                                    .currencyRateRight.currency.name),
+                                padding: EdgeInsets.all(15.0),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                color: Colors.white,
+                                textColor: Colors.black,
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      child: new SimpleDialog(
+                                          title: new Text("Select Currency"),
+                                          children: <Widget>[
+                                            CurrencyRateListRight(
+                                                state: store.state.ratesListState),
+                                          ]));
+                                },
+                              ),
+                            )
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: MoneyInputLeft(amount: state.amountLeft, currency: state.currencyRateLeft.currency),
-                        )                                              
-                      ) 
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: MoneyInputLeft(
+                                amount: state.amountLeft,
+                                currency: state.currencyRateLeft.currency),
+                          ))
+                        ],
+                      ),
+                      Container(
+                          margin: EdgeInsets.all(25.0),
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0),
+                        child: 
+                        Text(
+                          (state.amountRight).toString(),
+                           style: new TextStyle(
+                             fontSize: 20.0
+                           )
+                        ),
+                      ))
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      StoreBuilder<AppState>(
-                        builder: (context, store) => FlatButton(
-                          child: Text(store.state.ratesListState
-                              .currencyRateRight.currency.name),
-                          padding: EdgeInsets.all(15.0),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                          color: Colors.white,
-                          textColor: Colors.black,
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                child: new SimpleDialog(
-                                    title: new Text("Select Currency"),
-                                    children: <Widget>[
-                                      CurrencyRateListRight(
-                                          state: store.state.ratesListState),
-                                    ]));
-                          },
-                        ),
-                      ),                      
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Text((state.amountRight).toString()),
-                        )                                              
-                      )
-                  ],)
-                ],
+                ),
               );
             }));
   }
