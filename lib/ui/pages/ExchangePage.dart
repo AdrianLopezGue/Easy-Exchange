@@ -1,7 +1,5 @@
 import 'package:easy_exchange/model/index.dart';
 import 'package:easy_exchange/redux/index.dart';
-import 'package:easy_exchange/ui/widget/currency-button-widget.dart';
-import 'package:easy_exchange/ui/widget/currency-rate-list-widget.dart';
 import 'package:easy_exchange/ui/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -62,7 +60,7 @@ class ExchangePage extends StatelessWidget {
                       Expanded(
                           child: Padding(
                         padding: const EdgeInsets.only(left: 16.0),
-                        child: MoneyInputLeft(
+                        child: MoneyInput(
                             amount: vm.rateListState.amountLeft,
                             currency:
                                 vm.rateListState.currencyRateLeft.currency),

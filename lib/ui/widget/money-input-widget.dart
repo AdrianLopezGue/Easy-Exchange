@@ -3,24 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:money/money.dart';
 
-class MoneyInputLeft extends StatefulWidget {
+class MoneyInput extends StatefulWidget {
   final double amount;
   final Currency currency;
 
-  const MoneyInputLeft({this.amount, this.currency});
+  const MoneyInput({this.amount, this.currency});
 
   @override
-  _MoneyInputLeftState createState() => _MoneyInputLeftState();
+  _MoneyInputState createState() => _MoneyInputState();
 }
 
-class _MoneyInputLeftState extends State<MoneyInputLeft> {
+class _MoneyInputState extends State<MoneyInput> {
   @override
   void initState() {
     super.initState();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
+
     return (StoreBuilder<AppState>(builder: (context, store) {
       var text =
           Money.fromDouble(widget.amount, widget.currency).amountAsString;
