@@ -1,6 +1,5 @@
 import 'package:easy_exchange/model/index.dart';
 import 'package:easy_exchange/redux/index.dart';
-import 'package:money/money.dart';
 import 'package:redux/redux.dart';
 
 AppState mainReducer(AppState state, dynamic action) {
