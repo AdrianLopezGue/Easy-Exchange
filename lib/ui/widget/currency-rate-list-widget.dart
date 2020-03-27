@@ -1,6 +1,6 @@
-import 'package:easy_exchange/bloc/currency-rate-bloc.dart';
+import 'package:easy_exchange/services/bloc/currency-rate-bloc.dart';
 import 'package:easy_exchange/model/index.dart';
-import 'package:easy_exchange/networking/index.dart';
+import 'package:easy_exchange/services/networking/index.dart';
 import 'package:easy_exchange/redux/index.dart';
 import 'package:flutter/material.dart';
 

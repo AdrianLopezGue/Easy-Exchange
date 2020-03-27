@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:easy_exchange/networking/response.dart';
-import 'package:easy_exchange/repository/currency-rates-repository.dart';
+import 'package:easy_exchange/services/networking/response.dart';
+import 'package:easy_exchange/services/repository/currency-rates-repository.dart';
 import 'package:easy_exchange/model/currency-rates.dart';
 import 'package:money/money.dart';
 import 'package:rxdart/subjects.dart';

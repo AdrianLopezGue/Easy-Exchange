@@ -1,6 +1,6 @@
 
 import 'package:easy_exchange/redux/index.dart';
-import 'package:easy_exchange/repository/currency-rates-repository.dart';
+import 'package:easy_exchange/services/repository/currency-rates-repository.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
