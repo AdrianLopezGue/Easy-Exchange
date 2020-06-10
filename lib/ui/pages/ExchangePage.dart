@@ -1,97 +1,181 @@
 import 'package:easy_exchange/model/index.dart';
-import 'package:easy_exchange/redux/index.dart';
-import 'package:easy_exchange/ui/widget/index.dart';
+import 'package:easy_exchange/services/repository/currency-rates-repository.dart';
+import 'package:easy_exchange/ui/widget/amount-input.widget.dart';
+import 'package:easy_exchange/ui/widget/currency-button.widget.dart';
+import 'package:easy_exchange/ui/widget/swap-currencies-button.widget.dart';
+import 'package:easy_exchange/util/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:money/money.dart';
 
-class ExchangePage extends StatelessWidget {
+class ExchangePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Easy Exchange'),
-        ),
-        body: StoreConnector<AppState, _ViewModel>(converter: (store) {
-          return new _ViewModel(
-              rateListState: store.state.ratesListState,
-              getCurrencyRatesListLeft: (Rate rateLeft, Rate rateRight) {
-                store.dispatch(getSpecificRates(
-                    Currency(rateLeft.currency.code),
-                    Currency(rateRight.currency.code)));
-              },
-              getCurrencyRatesListRight: (Rate rateLeft, Rate rateRight) {
-                store.dispatch(ActionCurrencyRateRightChanged(
-                    Currency(rateLeft.currency.code), rateRight.rate));
-              },
-              swap: () => store.dispatch(getSpecificRates(
-                  store.state.ratesListState.currencyRateRight.currency,
-                  store.state.ratesListState.currencyRateLeft.currency)));
-        }, builder: (context, _ViewModel vm) {
-          // data loaded all is ok
-          return Center(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              margin: EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        CurrencyButton(vm.rateListState.currencyRateLeft.currency.name, vm.rateListState, vm.getCurrencyRatesListLeft, true),
-                        FlatButton(
-                            child: Icon(Icons.swap_horiz, color: Colors.black),
-                            padding: EdgeInsets.all(10.0),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0)),
-                            color: Colors.white,
-                            onPressed: vm.swap),
-                        CurrencyButton(vm.rateListState.currencyRateRight.currency.name, vm.rateListState, vm.getCurrencyRatesListRight, false),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: MoneyInput(
-                            amount: vm.rateListState.amountLeft,
-                            currency:
-                                vm.rateListState.currencyRateLeft.currency),
-                      ))
-                    ],
-                  ),
-                  Container(
-                      margin: EdgeInsets.all(25.0),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text((vm.rateListState.amountRight).toString(),
-                            style: new TextStyle(fontSize: 20.0)),
-                      ))
-                ],
-              ),
-            ),
-          );
-        }));
-  }
+  _ExchangePageState createState() => _ExchangePageState();
 }
 
-class _ViewModel {
-  final RatesListState rateListState;
-  final Function(Rate rateLeft, Rate rateRight) getCurrencyRatesListLeft;
-  final Function(Rate rateLeft, Rate rateRight) getCurrencyRatesListRight;
-  final Function() swap;
+class _ExchangePageState extends State<ExchangePage> {
+  String _originCurrencyCode = "EUR";
+  String _destinationCurrencyCode = "USD";
+  double _destinationCurrencyRate = 1.13;
 
-  _ViewModel({
-    @required this.rateListState,
-    @required this.getCurrencyRatesListLeft,
-    @required this.getCurrencyRatesListRight,
-    @required this.swap,
-  });
+  double amountToConvert = 0.0;
+
+  CurrencyRatesRepository _repository = new CurrencyRatesRepository();
+
+  changeOrigenCurrency(newOrigenCurrencyCode, newOrigenCurrencyRate) async {
+    CurrencyRates rates = await _repository.fetchSpecificCurrencyRates(
+        newOrigenCurrencyCode, _destinationCurrencyCode);
+
+    setState(() {
+      _originCurrencyCode = newOrigenCurrencyCode;
+      _destinationCurrencyRate = rates.rates[0].rate;
+    });
+  }
+
+  changeDestinationCurrency(
+      newDestinationCurrencyCode, newDestinationCurrencyRate) async {
+    CurrencyRates rates = await _repository.fetchSpecificCurrencyRates(
+        _originCurrencyCode, newDestinationCurrencyCode);
+
+    setState(() {
+      _destinationCurrencyCode = newDestinationCurrencyCode;
+      _destinationCurrencyRate = rates.rates[0].rate;
+    });
+  }
+
+  changeAmount(newAmount) {
+    setState(() {
+      amountToConvert = double.parse(newAmount);
+    });
+  }
+
+  swapCurrencies() async {
+    CurrencyRates rates = await _repository.fetchSpecificCurrencyRates(
+        _destinationCurrencyCode, _originCurrencyCode);
+
+    setState(() {
+      String temporaryString = _originCurrencyCode;
+      _originCurrencyCode = _destinationCurrencyCode;
+      _destinationCurrencyCode = temporaryString;
+      _destinationCurrencyRate = rates.rates[0].rate;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final halfMediaWidth = MediaQuery.of(context).size.width / 1.1;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text(
+            'Converter',
+          ),
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: Center(
+            child: Column(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Amount",
+                    style: TextStyle(color: Colors.grey, fontSize: 20.0)),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Container(
+                    width: halfMediaWidth,
+                    height: 55.0,
+                    child: AmountInput(changeAmount)),
+              ],
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("From",
+                        style: TextStyle(color: Colors.grey, fontSize: 20.0)),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    CurrencyButton(_originCurrencyCode, changeOrigenCurrency),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 40.0,
+                    ),
+                    SwapCurrenciesButton(swapCurrencies),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      "To",
+                      style: TextStyle(color: Colors.grey, fontSize: 20.0),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    CurrencyButton(
+                        _destinationCurrencyCode, changeDestinationCurrency),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+            Text(
+              "1 " +
+                  _originCurrencyCode +
+                  " = " +
+                  _destinationCurrencyRate.toString() +
+                  " " +
+                  _destinationCurrencyCode,
+              style: TextStyle(fontSize: 16.0),
+            ),
+            SizedBox(
+              height: 40.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                    (amountToConvert).toStringAsFixed(2),
+                    style: TextStyle(
+                        fontSize: 21.0,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold)),
+                SizedBox(width: 10.0,),
+                Text(_originCurrencyCode,
+                    style: TextStyle(
+                        fontSize: 21.0,
+                        color: Colors.grey,))
+              ],
+            ),
+            Text("=",
+                style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold)),
+            Text(
+                (amountToConvert * _destinationCurrencyRate)
+                        .toStringAsFixed(2) +
+                    " " +
+                    _destinationCurrencyCode,
+                style: TextStyle(
+                    fontSize: 45,
+                    color: primaryColor,
+                    fontWeight: FontWeight.bold)),
+          ],
+        )));
+  }
 }

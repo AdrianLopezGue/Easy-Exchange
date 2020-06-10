@@ -26,6 +26,10 @@ dependencies:
   redux: ^4.0.0
   flutter_redux: ^0.6.0
   redux_thunk: ^0.3.0
+  google_fonts: ^0.1.0
+  currency_icons: ^0.0.2
+  flutter_multi_formatter: ^1.1.5
+  flutter_statusbarcolor: ^0.2.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -47,9 +51,18 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+      - family: TitilliumWeb
+        fonts:
+          - asset: assets/fonts/TitilliumWeb-Regular.ttf
+          - asset: assets/fonts/TitilliumWeb-Italic.ttf
+            style: italic
+          - asset: assets/fonts/TitilliumWeb-Bold.ttf
+            weight: 800
+
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

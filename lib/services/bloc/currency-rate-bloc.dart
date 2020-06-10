@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:easy_exchange/services/networking/response.dart';
 import 'package:easy_exchange/services/repository/currency-rates-repository.dart';
 import 'package:easy_exchange/model/currency-rates.dart';
-import 'package:money/money.dart';
 import 'package:rxdart/subjects.dart';
 
 class CurrencyRatesListBloc {
@@ -16,13 +15,12 @@ class CurrencyRatesListBloc {
   Stream<Response<CurrencyRates>> get currencyRatesListStream =>
       _currencyRatesListController.stream;
 
-  CurrencyRatesListBloc(Currency baseCurrency) {
+  CurrencyRatesListBloc() {
     _currencyRatesListController = BehaviorSubject<Response<CurrencyRates>>();
     _currencyRatesListRepository = CurrencyRatesRepository();
-    fetchBaseCurrencyRates(baseCurrency);
   }
 
-  fetchBaseCurrencyRates(Currency baseCurrency) async {
+  fetchBaseCurrencyRates(String baseCurrency) async {
     currecyRatesListSink.add(Response.loading('Getting Currency Rates List.'));
     try {
       CurrencyRates currencyRates =
