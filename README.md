@@ -1,6 +1,6 @@
-# 💸🔄 Easy Exchange - Flutter + REDUX 🔄💸
+# 💸🔄 Easy Exchange - Flutter 🔄💸
 
-Exchange currency Flutter app to learn API+Redux interaction in Flutter.
+Exchange currency Flutter app to learn API interaction in Flutter.
 
 ### How to Use 
 
