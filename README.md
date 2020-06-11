@@ -2,6 +2,11 @@
 
 Exchange currency Flutter app to learn API interaction in Flutter.
 
+<p align="center">
+  <img src="screenshots/converter.png" width="256" hspace="4">
+  <img src="screenshots/rates.png" width="256" hspace="4">
+</p>
+
 ### How to Use 
 
 **Step 1:**
