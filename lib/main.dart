@@ -32,6 +32,7 @@ class EasyExchange extends StatelessWidget {
         appBarTheme:
             AppBarTheme(color: Colors.white, brightness: Brightness.light),
       ),
+      debugShowCheckedModeBanner: false,
       home: ChangeNotifierProvider<BottomNavigationBarProvider>(
         child: BottomNavigationBarWidget(),
         create: (BuildContext context) => BottomNavigationBarProvider(),
