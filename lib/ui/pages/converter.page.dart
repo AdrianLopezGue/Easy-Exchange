@@ -65,13 +65,7 @@ class _ExchangePageState extends State<ExchangePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text(
-            'Converter',
-          ),
-          centerTitle: true,
-          elevation: 0.0,
-        ),
+
         body: Center(
             child: Column(
           children: <Widget>[

@@ -1,7 +1,8 @@
+import 'package:easy_exchange/ui/widget/bottom-navigation-bar.widget.dart';
 import 'package:easy_exchange/util/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_exchange/ui/pages/ExchangePage.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(EasyExchange());
 
@@ -31,7 +32,10 @@ class EasyExchange extends StatelessWidget {
         appBarTheme:
             AppBarTheme(color: Colors.white, brightness: Brightness.light),
       ),
-      home: ExchangePage(),
+      home: ChangeNotifierProvider<BottomNavigationBarProvider>(
+        child: BottomNavigationBarWidget(),
+        create: (BuildContext context) => BottomNavigationBarProvider(),
+      ),
     );
   }
 }
