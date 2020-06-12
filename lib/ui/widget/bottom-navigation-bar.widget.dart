@@ -52,7 +52,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBarWidget> {
             });
           } else if(index == 2){
             setState(() {
-              appBarTitle = "Graphs";
+              appBarTitle = "Graph";
             });
           }
         },
@@ -70,7 +70,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBarWidget> {
           BottomNavigationBarItem(
             icon: Image.asset('assets/images/graph.png'),
             activeIcon: Image.asset('assets/images/graph-active.png'),
-            title: Text('Graphs'),
+            title: Text('Graph'),
           ),
         ],
       ),

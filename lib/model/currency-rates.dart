@@ -13,6 +13,35 @@ class CurrencyRates {
   }
 }
 
+
+class HistoricalRates {
+  final Currency baseCurrency;
+  final List<HistoryRatePoint> rates;
+
+  HistoricalRates(this.baseCurrency, this.rates);
+
+  factory HistoricalRates.fromJson(Map<String, dynamic> json) {
+    final baseCurrency = json['base'];
+    final Map<String, dynamic> ratesMap = json['rates'];
+    return HistoricalRates(
+      Currency(baseCurrency),
+      ratesMap.entries.map((MapEntry<String, dynamic> entry) {
+        return HistoryRatePoint(
+          DateTime.parse(entry.key),
+          _parseRates(entry.value, baseCurrency),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class HistoryRatePoint {
+  final DateTime date;
+  final List<Rate> rates;
+
+  HistoryRatePoint(this.date, this.rates);
+}
+
 class Rate {
   Currency currency;
   double rate;
